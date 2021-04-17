@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/main_model.dart';
+import 'package:flutter_app/book_list_page.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
 
   Widget build(BuildContext context) {
-
+    final Future<FirebaseApp> _initialization = Firebase.initializeApp();
     return MaterialApp(
       title: 'Flutter でも',
       home: ChangeNotifierProvider<MainModel>(
@@ -32,7 +35,10 @@ class MyApp extends StatelessWidget {
                     ElevatedButton(
                       child: Text('ボタン'),
                       onPressed: () {
-                        model.changeUedaText();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => BookListPage()),
+                        );
                       },
                     ),
                 ],
@@ -45,3 +51,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
